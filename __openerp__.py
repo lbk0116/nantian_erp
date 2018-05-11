@@ -20,7 +20,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','hr','project','resource','base_action_rule','hr_attendance'],
+    'depends': ['base','mail','hr','resource','base_action_rule'],
 
     # always loaded
     'data': [
@@ -37,8 +37,8 @@
         'views/nantian_erp_cron.xml',
         'views/nantian_erp_auto_action.xml',
         'views/nantian_erp_link.xml',
-        'views/nantian_erp_project_view.xml',
-        'views/nantian_erp_ip_data_menu.xml',
+        # 'views/nantian_erp_project_view.xml',
+        # 'views/nantian_erp_ip_data_menu.xml',
         'views/weekly_reports/sale.xml',
         'views/zhaopin/job.xml',
         'views/zhaopin/interview.xml',
@@ -47,6 +47,7 @@
         'views/human_cost/human_cost.xml',
         'views/company_server_info.xml',
         'views/zhaopin/recruitment.xml',
+        'views/contract/contract.xml'
         # 'views/export_resume.xml',
     ],
     # only loaded in demonstration mode

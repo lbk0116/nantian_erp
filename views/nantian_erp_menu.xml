@@ -317,69 +317,6 @@
         <menuitem id="dimission_done" parent="dimission" action="nantian_erp_dimission_done" name="dimission_done" />
         <menuitem id="dimission_special" parent="dimission" action="nantian_erp_dimission_special" name="dimission_special" groups="nantian_erp.group_hr_manager_assistant"/>
 
-
-        <record id="nantian_erp_to_examine_attendance" model="ir.actions.act_window">
-            <field name="name">待审批的出勤</field>
-            <field name="res_model">hr.attendance</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('examine_user','=',uid),('state','=','confirmed')]</field>
-        </record>
-        <record id="nantian_erp_to_examine_attendance_tree" model="ir.actions.act_window.view">
-            <field name="view_mode">tree</field>
-            <field name="sequence" eval="1" />
-            <field name="view_id" ref="nantian_view_attendance_who" />
-            <field name="act_window_id" ref="nantian_erp_to_examine_attendance" />
-        </record>
-        <record id="nantian_erp_to_examine_attendance_form" model="ir.actions.act_window.view">
-            <field name="view_mode">form</field>
-            <field name="sequence" eval="12" />
-            <field name="view_id" ref="nantian_erp_confirmed_attendance_form" />
-            <field name="act_window_id" ref="nantian_erp_to_examine_attendance" />
-        </record>
-        <record id="nantian_erp_examined_attendance" model="ir.actions.act_window">
-            <field name="name">已审批的出勤</field>
-            <field name="res_model">hr.attendance</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('examine_user','=',uid),('state','=','done')]</field>
-        </record>
-        <record id="nantian_erp_examined_attendance_tree" model="ir.actions.act_window.view">
-            <field name="view_mode">tree</field>
-            <field name="sequence" eval="1" />
-            <field name="view_id" ref="nantian_view_attendance_who" />
-            <field name="act_window_id" ref="nantian_erp_examined_attendance" />
-        </record>
-        <record id="nantian_erp_examined_attendance_form" model="ir.actions.act_window.view">
-            <field name="view_mode">form</field>
-            <field name="sequence" eval="12" />
-            <field name="view_id" ref="nantian_erp_done_attendance_form" />
-            <field name="act_window_id" ref="nantian_erp_examined_attendance" />
-        </record>
-        <record id="nantian_erp_my_attendance" model="ir.actions.act_window">
-            <field name="name">我的出勤</field>
-            <field name="res_model">hr.attendance</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name="domain">[('employee_id.user_id','=',uid)]</field>
-        </record>
-        <record id="nantian_erp_my_attendance_tree" model="ir.actions.act_window.view">
-            <field name="view_mode">tree</field>
-            <field name="sequence" eval="1" />
-            <field name="view_id" ref="nantian_view_attendance_who" />
-            <field name="act_window_id" ref="nantian_erp_my_attendance" />
-        </record>
-        <record id="nantian_erp_my_attendance_form" model="ir.actions.act_window.view">
-            <field name="view_mode">form</field>
-            <field name="sequence" eval="12" />
-            <field name="view_id" ref="nantian_erp_done_attendance_form" />
-            <field name="act_window_id" ref="nantian_erp_my_attendance" />
-        </record>
-        <menuitem id="menu_to_examine_attendance" parent="hr_attendance.menu_hr_attendance"  name="to_examine_attendance" action="nantian_erp_to_examine_attendance"/>
-        <menuitem id="menu_examined_attendance" parent="hr_attendance.menu_hr_attendance"  name="examined_attendance" action="nantian_erp_examined_attendance"/>
-        <menuitem id="menu_my_attendance" parent="hr_attendance.menu_hr_attendance"  name="my_attendance" action="nantian_erp_my_attendance"/>
-
-
         <record id="nantian_erp_leave_create" model="ir.actions.act_window">
             <field name="name">请假申请创建</field>
             <field name="res_model">nantian_erp.hr_leave</field>
@@ -511,24 +448,6 @@
         </record>
 
 
-        <record id="nantian_service_partner_action" model="ir.actions.act_window">
-            <field name="name">服务客户</field>
-            <field name="res_model">res.partner</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-            <field name ="domain">[('category','=','服务客户')]</field>
-        </record>
-        <record id="nantian_service_tree_partner_action" model="ir.actions.act_window.view">
-            <field name="view_mode">tree</field>
-            <field name="view_id" ref="base.view_partner_tree" />
-            <field name="act_window_id" ref="nantian_service_partner_action" />
-        </record>
-        <record id="nantian_service_form_partner_action" model="ir.actions.act_window.view">
-            <field name="view_mode">form</field>
-            <field name="view_id" ref="nantian_service_partner_form" />
-            <field name="act_window_id" ref="nantian_service_partner_action" />
-        </record>
-        <menuitem id="nantian_service_partner" sequence="21" parent="nantian_working_teams" action="nantian_service_partner_action" name="partner" groups="nantian_erp.group_nantian_header,nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss,nantian_erp.group_hr_president_assistant"/>
 
 
 
@@ -574,23 +493,6 @@
         </record>
         <menuitem name="nantian_config" id="nantian_config" parent="nantian_contract_menu_5" sequence="4" groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss" />
         <menuitem id="nantian_works_manager"  sequence="5" parent="nantian_config" action="nantian_works_manager_action" name="works" groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss"/>
-
-
-        <record id="nantian_erp_jobs_view" model="ir.actions.act_window">
-            <field name="name">合同岗位</field>
-            <field name="res_model">nantian_erp.jobs</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <menuitem name="nantian_jobs" id="nantian_jobs"  sequence="10" parent="nantian_config"  action="nantian_erp_jobs_view" groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss,nantian_erp.group_hr_president_assistant"/>
-
-        <record id="nantian_erp_collection_view" model="ir.actions.act_window">
-            <field name="name">合同收款</field>
-            <field name="res_model">nantian_erp.collection</field>
-            <field name="view_type">form</field>
-            <field name="view_mode">tree,form</field>
-        </record>
-        <menuitem name="nantian_collection" id="nantian_collection" sequence="15"  parent="nantian_config"  action="nantian_erp_collection_view" groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss"/>
 
         <record id="nantian_erp_detail_view" model="ir.actions.act_window">
             <field name="name">维保明细</field>

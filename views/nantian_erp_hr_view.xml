@@ -650,63 +650,63 @@
             </field>
         </record>
 
-        <record id="nantian_erp_done_attendance_form" model="ir.ui.view">
-            <field name="name">hr.attendance.form</field>
-            <field name="model">hr.attendance</field>
-            <field name="arch" type="xml">
-                <form string="Employee attendances" create="false" edit="false">
-                    <header>
-                        <field name="state" widget="statusbar"/>
-                    </header>
-                    <sheet>
-                        <group>
-                            <field name="employee_id"/>
-                            <field name="name"/>
-                            <field name="action"/>
-                            <field name="action_desc"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        <record id="nantian_erp_confirmed_attendance_form" model="ir.ui.view">
-            <field name="name">hr.attendance.form1</field>
-            <field name="model">hr.attendance</field>
-            <field name="arch" type="xml">
-                <form string="Employee attendances" create="false" edit="false">
-                    <header>
-                        <button name="action_draft" type="object"
-                                string="退回"
-                                states="confirmed"/>
-                        <button name="action_confirm" type="object"
-                                string="提交" states="draft"
-                                class="oe_highlight"/>
-                        <button name="action_done" type="object"
-                                string="确认" states="confirmed"
-                                class="oe_highlight"/>
-                        <field name="state" widget="statusbar"/>
-                   </header>
-                    <sheet>
-                        <group>
-                            <field name="employee_id"/>
-                            <field name="name"/>
-                            <field name="action"/>
-                            <field name="action_desc"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-        <record id="nantian_view_attendance_who" model="ir.ui.view">
-            <field name="name">hr.nantian_attendance.tree</field>
-            <field name="model">hr.attendance</field>
-            <field name="inherit_id" ref="hr_attendance.view_attendance_who"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='action']" position="after">
-                    <field name="examine_user" string="审批人"/>
-                </xpath>
-            </field>
-        </record>
+        <!--<record id="nantian_erp_done_attendance_form" model="ir.ui.view">-->
+            <!--<field name="name">hr.attendance.form</field>-->
+            <!--<field name="model">hr.attendance</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Employee attendances" create="false" edit="false">-->
+                    <!--<header>-->
+                        <!--<field name="state" widget="statusbar"/>-->
+                    <!--</header>-->
+                    <!--<sheet>-->
+                        <!--<group>-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="name"/>-->
+                            <!--<field name="action"/>-->
+                            <!--<field name="action_desc"/>-->
+                        <!--</group>-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="nantian_erp_confirmed_attendance_form" model="ir.ui.view">-->
+            <!--<field name="name">hr.attendance.form1</field>-->
+            <!--<field name="model">hr.attendance</field>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<form string="Employee attendances" create="false" edit="false">-->
+                    <!--<header>-->
+                        <!--<button name="action_draft" type="object"-->
+                                <!--string="退回"-->
+                                <!--states="confirmed"/>-->
+                        <!--<button name="action_confirm" type="object"-->
+                                <!--string="提交" states="draft"-->
+                                <!--class="oe_highlight"/>-->
+                        <!--<button name="action_done" type="object"-->
+                                <!--string="确认" states="confirmed"-->
+                                <!--class="oe_highlight"/>-->
+                        <!--<field name="state" widget="statusbar"/>-->
+                   <!--</header>-->
+                    <!--<sheet>-->
+                        <!--<group>-->
+                            <!--<field name="employee_id"/>-->
+                            <!--<field name="name"/>-->
+                            <!--<field name="action"/>-->
+                            <!--<field name="action_desc"/>-->
+                        <!--</group>-->
+                    <!--</sheet>-->
+                <!--</form>-->
+            <!--</field>-->
+        <!--</record>-->
+        <!--<record id="nantian_view_attendance_who" model="ir.ui.view">-->
+            <!--<field name="name">hr.nantian_attendance.tree</field>-->
+            <!--<field name="model">hr.attendance</field>-->
+            <!--<field name="inherit_id" ref="hr_attendance.view_attendance_who"/>-->
+            <!--<field name="arch" type="xml">-->
+                <!--<xpath expr="//field[@name='action']" position="after">-->
+                    <!--<field name="examine_user" string="审批人"/>-->
+                <!--</xpath>-->
+            <!--</field>-->
+        <!--</record>-->
 
 
         <record model="ir.ui.view" id="nantian_erp_hr_leave_create">

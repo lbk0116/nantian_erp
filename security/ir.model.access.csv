@@ -51,8 +51,6 @@ nantian_erp_jobs_all,nantian_erp_jobs all,nantian_erp.model_nantian_erp_jobs,,1,
 nantian_erp_collection_all,nantian_erp_collection all,nantian_erp.model_nantian_erp_collection,,1,0,0,0
 nantian_erp_detail_all,nantian_erp_detail all,nantian_erp.model_nantian_erp_detail,,1,0,0,0
 
-nantian_erp_account_all,nantian_erp_account all,analytic.model_account_analytic_account,nantian_erp.group_hr_manager_assistant,1,1,1,1
-nantian_erp_work_assitant_account_all,nantian_erp_work_assitant_account all,analytic.model_account_analytic_account,nantian_erp.group_nantian_assistant,1,1,1,1
 
 nantian_erp_hr_job_all,nantian_erp_hr_job all,hr.model_hr_job,,1,1,0,0
 nantian_erp_hr_job_hr_manager_assistant,nantian_erp_hr_job hr_manager_assistant,hr.model_hr_job,nantian_erp.group_hr_manager_assistant,1,1,1,1

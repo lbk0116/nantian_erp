@@ -792,66 +792,66 @@ class hr_dimission(models.Model):
         self.state = 'no'
         self.employee_ids.states = u'正常在岗'
 
-class hr_attendance(models.Model):
-    _inherit = 'hr.attendance'
-
-    state = fields.Selection([
-         ('draft', "新建"),
-         ('confirmed', "待确认"),
-         ('done', "已确认"),
-    ], default=lambda self: self._get_state())
-    examine_user = fields.Many2one('res.users',string='审批人',default=lambda self: self._get_examine_user())
-
-    @api.multi
-    def _get_state(self):
-        pro_manager = []
-        dep_manager = []
-        for work in self.env['nantian_erp.working_team'].search([]):
-            pro_manager.append(work.user_id)
-        for department in self.env['hr.department'].search([]):
-            if department.manager_id:
-                em = department.manager_id
-
-                user = self.env['res.users'].search([('employee_ids', 'ilike', em.id)])
-
-                dep_manager.append(user)
-        if self.env.user not in pro_manager and self.env.user not in dep_manager:
-
-            return 'confirmed'
-        else:
-            return 'done'
-
-    @api.multi
-    def _get_examine_user(self):
-        pro_manager = []
-        dep_manager = []
-        for work in self.env['nantian_erp.working_team'].search([]):
-            pro_manager.append(work.user_id)
-        for department in self.env['hr.department'].search([]):
-            if department.manager_id:
-                em = department.manager_id
-                user = self.env['res.users'].search([('employee_ids', 'ilike', em.id)])
-                dep_manager.append(user)
-        if self.env.user not in pro_manager and self.env.user not in dep_manager:
-            if self.env.user.employee_ids.parent_id:
-                return self.env.user.employee_ids.parent_id.user_id
-            else:
-                return None
-        else:
-            return None
-    @api.one
-    def action_draft(self):
-        self.state = 'draft'
-        self.examine_user = self.employee_id.user_id
-
-    @api.one
-    def action_confirm(self):
-        self.state = 'confirmed'
-        self.examine_user = self.employee_id.user_id.employee_ids[0].parent_id.user_id
-
-    @api.one
-    def action_done(self):
-        self.state = 'done'
+# class hr_attendance(models.Model):
+#     _inherit = 'hr.attendance'
+#
+#     state = fields.Selection([
+#          ('draft', "新建"),
+#          ('confirmed', "待确认"),
+#          ('done', "已确认"),
+#     ], default=lambda self: self._get_state())
+#     examine_user = fields.Many2one('res.users',string='审批人',default=lambda self: self._get_examine_user())
+#
+#     @api.multi
+#     def _get_state(self):
+#         pro_manager = []
+#         dep_manager = []
+#         for work in self.env['nantian_erp.working_team'].search([]):
+#             pro_manager.append(work.user_id)
+#         for department in self.env['hr.department'].search([]):
+#             if department.manager_id:
+#                 em = department.manager_id
+#
+#                 user = self.env['res.users'].search([('employee_ids', 'ilike', em.id)])
+#
+#                 dep_manager.append(user)
+#         if self.env.user not in pro_manager and self.env.user not in dep_manager:
+#
+#             return 'confirmed'
+#         else:
+#             return 'done'
+#
+#     @api.multi
+#     def _get_examine_user(self):
+#         pro_manager = []
+#         dep_manager = []
+#         for work in self.env['nantian_erp.working_team'].search([]):
+#             pro_manager.append(work.user_id)
+#         for department in self.env['hr.department'].search([]):
+#             if department.manager_id:
+#                 em = department.manager_id
+#                 user = self.env['res.users'].search([('employee_ids', 'ilike', em.id)])
+#                 dep_manager.append(user)
+#         if self.env.user not in pro_manager and self.env.user not in dep_manager:
+#             if self.env.user.employee_ids.parent_id:
+#                 return self.env.user.employee_ids.parent_id.user_id
+#             else:
+#                 return None
+#         else:
+#             return None
+#     @api.one
+#     def action_draft(self):
+#         self.state = 'draft'
+#         self.examine_user = self.employee_id.user_id
+#
+#     @api.one
+#     def action_confirm(self):
+#         self.state = 'confirmed'
+#         self.examine_user = self.employee_id.user_id.employee_ids[0].parent_id.user_id
+#
+#     @api.one
+#     def action_done(self):
+#         self.state = 'done'
 
 #员工请假
 class hr_leave(models.Model):
@@ -1061,6 +1061,7 @@ class hr_leave_type(models.Model):
 #南天合同--岗位
 class jobs(models.Model):
     _name = 'nantian_erp.jobs'
+
     name = fields.Char(string='岗位名称')
     contract_id = fields.Many2one('nantian_erp.contract', string="合同")
     instruction = fields.Text(string='岗位说明')
@@ -1089,12 +1090,14 @@ class jobs(models.Model):
     employee_ids = fields.One2many('hr.employee', 'contract_jobs_id', "Employees")
     subtotal = fields.Float(compute='_count_subtotal', store=True,string="小计")
     employee_count = fields.Integer(compute='_count_employees', store=True)
-    #自动计算关联人数
+
+    # 自动计算关联人数
     @api.depends('employee_ids')
     def _count_employees(self):
         for record in self:
             record.employee_count = len(record.employee_ids)
-    #小计自动计算
+
+    # 小计自动计算
     @api.depends('price','amount','unit_amount')
     def _count_subtotal(self):
         for record in self:
@@ -1114,12 +1117,12 @@ class jobs(models.Model):
                 record.rated_moneys = record.price * record.amount * record.unit_amount / (string.atof(record.rate) + 1) * string.atof(record.rate)
     #修改作为外键时的显示
     @api.multi
-    @api.depends('name', 'instruction')
+    @api.depends('name', 'contract_id')
     def name_get(self):
         datas=[]
         for r in self:
-            if r.instruction:
-                datas.append((r.id, (r.name + '(' + (r.instruction) + ')'+'--' + u'岗位要求人数' + unicode(r.amount) + u'人')))
+            if r.contract_id :
+                datas.append((r.id, (r.contract_id.name+'_'+r.name + '_'+ u'岗位要求人数' + unicode(r.amount) + u'人')))
             else:
                 datas.append((r.id, (r.name+'--' + u'岗位要求人数' + unicode(r.amount) + u'人')))
         return datas
@@ -1211,8 +1214,10 @@ class collection(models.Model):
         ],
         string="收款状态", compute='_change_state',default=u'创建中',store=True
     )
-    user_id = fields.Many2one('res.users',compute='_change_state', string="操作人")
-    time = fields.Datetime(compute='_change_state',string='确认时间'  )
+    user_id = fields.Many2one('res.users',compute='_change_state', string="操作人", store=True)
+    time = fields.Datetime(compute='_change_state',string='确认时间' )
+    actually_collection_time = fields.Date(string="实际收款时间")
+
     #自动计算税金
     @api.depends('money', 'rate')
     def _count_rated_moneys(self):
@@ -1235,6 +1240,17 @@ class collection(models.Model):
                 record.state = u'已收款'
                 record.user_id = self.env.user
                 record.time = fields.datetime.now()
+
+    @api.multi
+    @api.depends('name', 'contract_id')
+    def name_get(self):
+        datas = []
+        for r in self:
+            if r.contract_id:
+                datas.append((r.id, (r.contract_id.name+'_'+r.name)))
+            else:
+                datas.append((r.id, r.name))
+        return datas
 
 
 # 南天合同
@@ -1282,6 +1298,8 @@ class contract(models.Model):
         string="合同类别", default=u'服务合同'
     )
     employee_ids = fields.One2many('hr.employee', 'nantian_erp_contract_id', "Employees")
+    contract_ids = fields.Many2many('nantian_erp.working_team', 'working_team_to_contract',string="工作组")
+
 
     # 自动计算下次收款提醒邮件--距离收款时间一个月内 频率--每周
     @api.multi
@@ -1499,6 +1517,7 @@ class contract(models.Model):
     def name_get(self):
         return [(r.id, (r.name + '-' + u'合同约束人数' + (str(r.need_employee_count)) + u'人')) for r in self]
 
+
 class res_partner(models.Model):
     _inherit = 'res.partner'
 
@@ -1526,7 +1545,8 @@ class res_partner(models.Model):
         value['is_company'] = 'True'
         return {'value':value}
 
-#工作组
+
+# 工作组
 class working_team(models.Model):
     _name = 'nantian_erp.working_team'
     # _inherit = ['mail.thread', 'ir.needaction_mixin']
@@ -1551,6 +1571,7 @@ class working_team(models.Model):
             (u'已关闭', u'已关闭'),
         ], string=u'状态', default=u'进行中'
     )
+    contract_ids = fields.Many2many('nantian_erp.contract', 'working_team_to_contract',string="合同")
 
     # 根据需要人数和现有人数判断是否缺员
     @api.depends('need_employee_count', 'employee_count')
@@ -1685,6 +1706,7 @@ class education_experience(models.Model):
     date_start = fields.Date(string='开始')
     date_end = fields.Date(string='结束')
     employee_id = fields.Many2one('hr.employee',string='员工')
+
 
 
 

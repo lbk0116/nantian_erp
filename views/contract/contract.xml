@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record model="ir.ui.view" id="contract_jobs_form_view">
+            <field name="name">contract_job_form</field>
+            <field name="model">nantian_erp.jobs</field>
+            <field name="arch" type="xml">
+                <form string="Partners">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="contract_id" string="合同"/>
+                            <field name="name" string="岗位名称"/>
+                            <field name="instruction" string="岗位说明"/>
+                            <field name="price" string="单价(人/时间)"/>
+                            <field name="unit" string="单位"/>
+                        </group>
+                        <group>
+                            <field name="amount" string="规定人员数量"/>
+                            <field name="unit_amount" string="规定时间数量"/>
+                            <field name="rated_moneys" string="税率"/>
+                            <field name="subtotal" string="小计" readonly="True"/>
+                            <field name="employee_count" string="现有人数" readonly="True"/>
+                        </group>
+                    </group>
+                    <notebook>
+                       <page string="员工" name="team">
+                            <field colspan="2" name="employee_ids" widget="many2many_kanban"  context="{'default_groups_ref': ['base.group_user', 'base.group_partner_manager','nantian_erp.group_work_team_user']}">
+                                <kanban quick_create="false" create="true" delete="true">
+                                    <field name="name"/>
+                                    <templates>
+                                        <t t-name="kanban-box">
+                                            <div style="position: relative">
+                                                <a t-if="! read_only_mode" type="delete" style="position: absolute; right: 0; padding: 1px; diplay: inline-block">X</a>
+                                                <div class="oe_module_vignette">
+                                                    <a type="open"><img t-att-src="kanban_image('hr.employee', 'image_small', record.id.value)" class="oe_avatar oe_kanban_avatar_smallbox"/></a>
+                                                    <div class="oe_module_desc">
+                                                        <field name="name"/>
+                                                        <field name="category"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="contract_job_tree_view">
+            <field name="name">contract_job tree</field>
+            <field name="model">nantian_erp.jobs</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="contract_id" string="合同"/>
+                    <field name="name" string="岗位名称"/>
+                    <field name="instruction" string="岗位说明"/>
+                    <field name="price" string="单价(人/时间)"/>
+                    <field name="unit" string="单位"/>
+                    <field name="amount" string="规定人员数量"/>
+                    <field name="unit_amount" string="规定时间数量"/>
+                    <field name="rated_moneys" string="税率"/>
+                    <field name="subtotal" string="小计" readonly="True"/>
+                    <field name="employee_count" string="现有人数" readonly="True"/>
+                </tree>
+            </field>
+        </record>
+        <record id="contract_job_filter_view" model="ir.ui.view">
+            <field name="name">contract_job</field>
+            <field name="model">nantian_erp.jobs</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="contract_id" string="合同"/>
+                    <field name="name" string="名称"/>
+                    <separator/>
+                    <group expand="0" string="分组">
+                        <filter string="合同" name="contract_id" context="{'group_by':'contract_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="nantian_erp_jobs_view" model="ir.actions.act_window">
+            <field name="name">合同岗位</field>
+            <field name="res_model">nantian_erp.jobs</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="合同岗位管理" id="nantian_contract_jobs"  sequence="2" parent="nantian_contract_menu_5" groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss,nantian_erp.group_hr_president_assistant"/>
+        <menuitem name="nantian_jobs" id="nantian_jobs"  sequence="10" parent="nantian_contract_jobs"  action="nantian_erp_jobs_view" groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss,nantian_erp.group_hr_president_assistant"/>
+
+        <record model="ir.ui.view" id="contract_collection_form_view">
+            <field name="name">contract_collection_form</field>
+            <field name="model">nantian_erp.collection</field>
+            <field name="arch" type="xml">
+                <form string="collection">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="contract_id" string="合同"/>
+                            <field name="name" string="名称"/>
+                            <field name="date" string="合同收款时间"/>
+                            <field name="materials_date" string="准备合同材料收款时间"/>
+                            <field name="evaluate_money" string="预期收款金额"/>
+                        </group>
+                        <group>
+                            <field name="conditions" string="收款前提条件"/>
+                            <field name="money" string="实际收款金额"/>
+                            <field name="rate" string="税率"/>
+                            <field name="rated_moneys" string="税金"/>
+                            <field name="money_total" string="不含税收款金额" readonly="True"/>
+                            <field name="state" string="收款状态" readonly="True"/>
+                            <field name="user_id" string="操作人"/>
+                            <field name="actually_collection_time" string="实际收款时间"/>
+                        </group>
+                    </group>
+                </sheet>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="contract_collection_tree_view">
+            <field name="name">contract_collection tree</field>
+            <field name="model">nantian_erp.collection</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="contract_id" string="合同"/>
+                    <field name="name" string="名称"/>
+                    <field name="date" string="合同收款时间"/>
+                    <field name="materials_date" string="准备合同材料收款时间"/>
+                    <field name="evaluate_money" string="预期收款金额"/>
+                    <field name="conditions" string="收款前提条件"/>
+                    <field name="money" string="实际收款金额"/>
+                    <field name="rate" string="税率"/>
+                    <field name="rated_moneys" string="税金"/>
+                    <field name="money_total" string="不含税收款金额" readonly="True"/>
+                    <field name="state" string="收款状态" readonly="True"/>
+                    <field name="user_id" string="操作人"/>
+                    <field name="actually_collection_time" string="实际收款时间"/>
+                </tree>
+            </field>
+        </record>
+        <record id="contract_collection_filter_view" model="ir.ui.view">
+            <field name="name">contract_collection</field>
+            <field name="model">nantian_erp.collection</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="contract_id" string="合同"/>
+                    <field name="name" string="名称"/>
+                    <field name="date" string="合同收款时间"/>
+                    <field name="user_id" string="操作人"/>
+                     <field name="actually_collection_time" string="实际收款时间"/>
+                    <separator/>
+                    <group expand="0" string="分组">
+                        <filter string="合同" name="contract_id" context="{'group_by':'contract_id'}"/>
+                        <filter string="操作人" name="user_id" context="{'group_by':'user_id'}"/>
+                         <filter name="state" string="收款状态" context="{'group_by':'state'}"/>
+                        <filter string="实际收款时间" name="actually_collection_time" context="{'group_by':'actually_collection_time'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="nantian_erp_collection_view" model="ir.actions.act_window">
+            <field name="name">合同收款</field>
+            <field name="res_model">nantian_erp.collection</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem name="合同收款" id="nantian_collection_menu" sequence="3"  parent="nantian_contract_menu_5"   groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss"/>
+        <menuitem name="nantian_collection" id="nantian_collection" sequence="15"  parent="nantian_collection_menu"  action="nantian_erp_collection_view" groups="nantian_erp.group_nantian_assistant,nantian_erp.group_nantian_boss"/>
+    </data>
+</openerp>
