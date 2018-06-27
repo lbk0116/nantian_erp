@@ -1626,7 +1626,13 @@ class working_team(models.Model):
     @api.multi
     @api.depends('name', 'need_employee_count')
     def name_get(self):
-        return [(r.id, (r.name + '-' + u'所需人数' + (str(r.need_employee_count)) + u'人')) for r in self]
+        data = []
+        for r  in self:
+            if r.user_id:
+                data.append((r.id, (r.name + '-'+r.user_id.name+'-' + u'所需人数' + (str(r.need_employee_count)) + u'人')))
+            else:
+                data.append((r.id, (r.name + '-' + u'所需人数' + (str(r.need_employee_count)) + u'人')))
+        return data
 #人员调整记录
 class hr_adjusting(models.Model):
     _name = 'nantian_erp.hr_adjusting'
