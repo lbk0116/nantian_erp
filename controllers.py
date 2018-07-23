@@ -122,7 +122,10 @@ class Binary(http.Controller):
                         # 将base64 转为图片
                         f = StringIO(base64.b64decode(str(cer['image'])))
                         print "查看图片名称%d"%count
-                        image = InlineImage(tpl,f)
+                        try:
+                            image = InlineImage(tpl,f)
+                        except Exception:
+                            pass
                         #image = InlineImage(tpl,f,height=Mm(30))
                         f.close()
                     if cer['name']:
