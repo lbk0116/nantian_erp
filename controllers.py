@@ -107,7 +107,7 @@ class Binary(http.Controller):
                 Model = request.session.model('nantian_erp.work_experience')
                 experiences = Model.search_read([('id','in',employee['work_experience_ids'])])
                 for exper in experiences:
-                    exper_dict = {'date':exper['date'] or '','name':exper['name'] or '','job':exper['job'] or '','description':exper['description'] or ''}
+                    exper_dict = {'date':exper['date'] or '','name':exper['name'].replace('&','&amp;') or '','job':exper['job'].replace('&','&amp;') or '','description':exper['description'].replace('&','&amp;') or ''}
                     experiences_list.append(exper_dict)
 
             if employee['certificate_ids']:
@@ -138,6 +138,7 @@ class Binary(http.Controller):
                 gender = u'男'
             elif employee['gender'] == 'female':
                 gender = u'女'
+
             # 模板所需数据
             resume_dict = {'name':employee['name'] or '',
                            'gender':gender or '',
