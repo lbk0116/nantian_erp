@@ -6,4 +6,5 @@ from . import job
 from . import human_cost
 from . import company_server_info
 from . import service
+from . import user
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
